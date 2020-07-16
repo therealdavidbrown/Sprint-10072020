@@ -6,17 +6,19 @@ mydb = mysql.connector.connect(
     passwd="putain",
     database="products"
     )
-cursor = mydb.cursor()
+mycursor = mydb.cursor()
 #cursor.execute("CREATE DATABASE products")
-#cursor.execute("SHOW DATABASES")
+mycursor.execute("SHOW DATABASES")
 
-#for db in cursor:
-    #print(db)
+for db in mycursor:
+    print(db)
 
 #cursor.execute("CREATE TABLE products(name VARCHAR(255), category VARCHAR(255))")
-cursor.execute("SHOW TABLES")
-for tb in cursor:
+mycursor.execute("SHOW TABLES")
+for tb in mycursor:
     print(tb)
+
+mycursor.execute("DELETE FROM products")
 sqlFormula = "INSERT INTO products (name, category) VALUES (%s, %s)"
 items = [   ("Simba", "Chips"),
             ("Lays", "Chips"),
@@ -34,6 +36,5 @@ items = [   ("Simba", "Chips"),
             ("Spinach","Veggies"),
             ("Cabbage","Veggies"),]
 
-cursor.executemany(sqlFormula, items)
-mydb.commit
-#the end
+mycursor.executemany(sqlFormula, items)
+mydb.commit()
