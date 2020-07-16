@@ -1,5 +1,7 @@
 import mysql.connector
-
+import numpy as np
+import matplotlib as plt
+import pandas as pd
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",
@@ -38,3 +40,25 @@ items = [   ("Simba", "Chips"),
 
 mycursor.executemany(sqlFormula, items)
 mydb.commit()
+
+mycursor.execute("SELECT * FROM products")
+records = mycursor.fetchall()
+print("The total number of products is:" , mycursor.rowcount)
+nameList =[]
+catList = []
+
+for row in records:
+    print("Name: " + row[0] + "Type:" + row[1])
+    nameList.append(row[0])
+    catList.append(row[1])
+lenList = len(catList)
+for i in range(lenList) :
+    print(nameList[i] + '     ' + catList[i])
+
+data = {"Name" : nameList,
+        "Category" : catList
+        }
+df = pd.DataFrame( data, columns = ["Name" , "Category"])
+
+print(df)
+pd.value_counts(df["Category"]).plot.bar()
