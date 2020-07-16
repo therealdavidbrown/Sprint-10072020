@@ -36,3 +36,4 @@ items = [   ("Simba", "Chips"),
 
 cursor.executemany(sqlFormula, items)
 mydb.commit
+#the end
